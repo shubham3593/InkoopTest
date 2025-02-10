@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Input</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 40px;
+        }
+        label, input, p {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        #error, #result {
+            font-size: 16px;
+        }
+        #error {
+            color: red;
+        }
+        #result {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Checker</h1>
+    <label for="numberInput">Enter a positive number:</label>
+    <input type="text" id="numberInput" placeholder="Type a number">
+    <p id="error"></p>
+    <p id="result"></p>
+
+    <script>
+        const inputField = document.getElementById('numberInput');
+        const errorElement = document.getElementById('error');
+        const resultElement = document.getElementById('result');
+
+        inputField.addEventListener('input', function() {
+            const inputValue = inputField.value;
+            errorElement.textContent = '';
+            resultElement.textContent = '';
+
+            // Ignore empty input
+            if (inputValue === '') return;
+
+            // Check if input is a valid number
+            const number = parseInt(inputValue);
+
+            if (isNaN(number)) {
+                errorElement.textContent = 'Please enter a valid number.';
+                return;
+            }
+
+            // Handle negative numbers
+            if (number < 0) {
+                errorElement.textContent = 'Please enter a positive number.';
+                return;
+            }
+
+            // Handle even and odd numbers
+            let nextNumbers = [];
+            if (number % 2 === 0) {
+                for (let i = 1; i <= 3; i++) {
+                    nextNumbers.push(number + i * 2);  // Next even numbers
+                }
+                resultElement.textContent = 'Next 3 even numbers: ' + nextNumbers.join(', ');
+            } else {
+                for (let i = 1; i <= 3; i++) {
+                    nextNumbers.push(number + i * 2);  // Next odd numbers
+                }
+                resultElement.textContent = 'Next 3 odd numbers: ' + nextNumbers.join(', ');
+            }
+        });
+    </script>
+</body>
+</html>
